@@ -49,5 +49,7 @@ precip_data =
   transform(month=month.abb[month])
 ```
 
+There are `r nrow (trashwheel_data)` observations in the trashwheel data set and `r ncol (trashwheel_data)`variables. Some of the key variables include weight_tons, which is the amount of trash collected that month in tons, and volume_cubic_yards, which gives the volume of the trash. We also can see things like the about of sports balls Mr. Trash wheel collected in a month or over a period of time. For example, Mr. Trashwheel collected 
+
 
 
