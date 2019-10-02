@@ -1,0 +1,23 @@
+---
+title: "p8105_hw2_mrc2229"
+author: "Matthew Curran"
+date: "10/1/2019"
+output: github_document
+---
+
+```{r setup, include = FALSE}
+library(tidyverse)
+```
+
+```{r}
+library(readxl)
+trashwheel_data = read_excel(
+  "./hw2_data/Trash-Wheel-Collection-Totals-8-6-19.xlsx", 
+  sheet = 1, 
+  range = "A2:N406",
+  ) %>%
+  janitor::clean_names()
+```
+
+
+
