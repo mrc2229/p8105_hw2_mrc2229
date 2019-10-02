@@ -53,5 +53,19 @@ There are `r nrow (trashwheel_data)` observations in the trashwheel data set and
 
 There are `r nrow (precip_data)` observations in the trashwheel data set and `r ncol (precip_data)` variables. This data set contains the amount of precipitation in inches for every month of 2017 and 2018. So we can use it to show things like the total precipitation in 2018, which is `r sum (pull(precip_2018_data, precip_inches))` inches.
 
+#Problem 2
+##Reading and cleaning the FiveThirtyEight data.
+```{r}
+pols_month_data = read_csv(
+  "./hw2_data/fivethirtyeight_datasets/pols-month.csv"
+  )
 
+unemployment_data = read_csv(
+  "./hw2_data/fivethirtyeight_datasets/unemployment.csv"
+  )
+
+snp_data = read_csv(
+  "./hw2_data/fivethirtyeight_datasets/snp.csv"
+  )
+```
 
