@@ -49,7 +49,9 @@ precip_data =
   transform(month=month.abb[month])
 ```
 
-There are `r nrow (trashwheel_data)` observations in the trashwheel data set and `r ncol (trashwheel_data)`variables. Some of the key variables include weight_tons, which is the amount of trash collected that month in tons, and volume_cubic_yards, which gives the volume of the trash. We also can see things like the about of sports balls Mr. Trash wheel collected in a month or over a period of time. For example, Mr. Trashwheel collected 
+There are `r nrow (trashwheel_data)` observations in the trashwheel data set and `r ncol (trashwheel_data)` variables. Some of the key variables include weight_tons, which is the amount of trash collected that month in tons, and volume_cubic_yards, which gives the volume of the trash. We also can see things like the about of sports balls Mr. Trash wheel collected in a month or over a period of time. For example, Mr. Trashwheel collected `r median (pull(trashwheel_data, sports_balls))` sports balls in 2017.
+
+There are `r nrow (precip_data)` observations in the trashwheel data set and `r ncol (precip_data)` variables. This data set contains the amount of precipitation in inches for every month of 2017 and 2018. So we can use it to show things like the total precipitation in 2018, which is `r sum (pull(precip_2018_data, precip_inches))` inches.
 
 
 
