@@ -7,6 +7,7 @@ output: github_document
 
 ```{r setup, include = FALSE}
 library(tidyverse)
+library (readxl)
 ```
 
 ```{r}
@@ -16,7 +17,8 @@ trashwheel_data = read_excel(
   sheet = 1, 
   range = "A2:N406",
   ) %>%
-  janitor::clean_names()
+  janitor::clean_names() %>%
+  drop_na(dumpster)
 ```
 
 
