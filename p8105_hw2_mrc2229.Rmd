@@ -46,23 +46,28 @@ precip_2018_data = read_excel(
 precip_data =
   bind_rows(precip_2017_data, precip_2018_data)%>%
   janitor::clean_names() %>%
-  transform(month=month.abb[month])
+  transform(month=month.name[month])
 ```
 
-There are `r nrow (trashwheel_data)` observations in the trashwheel data set and `r ncol (trashwheel_data)` variables. Some of the key variables include weight_tons, which is the amount of trash collected that month in tons, and volume_cubic_yards, which gives the volume of the trash. We also can see things like the about of sports balls Mr. Trash wheel collected in a month or over a period of time. For example, Mr. Trashwheel collected `r trashwheel_data %>% filter (year=="2017") %>% pull(sports_balls) %>% median()` sports balls in 2017.
+There are `r nrow (trashwheel_data)` observations in the trashwheel data set and `r ncol (trashwheel_data)` variables. Some of the key variables include weight_tons, which is the amount of trash collected that month in tons, and volume_cubic_yards, which gives the volume of the trash. We also can see things like the about of sports balls Mr. Trash wheel collected in a month or over a period of time. For example, Mr. Trashwheel collected a median of `r trashwheel_data %>% filter (year=="2017") %>% pull(sports_balls) %>% median()` sports balls in 2017.
 
 There are `r nrow (precip_data)` observations in the trashwheel data set and `r ncol (precip_data)` variables. This data set contains the amount of precipitation in inches for every month of 2017 and 2018. So we can use it to show things like the total precipitation in 2018, which is `r precip_data %>% filter (year=="2018") %>% pull(precip_inches) %>% sum()` inches.
 
 #Problem 2
 ##Reading and cleaning the FiveThirtyEight data.
 ```{r}
-pols_month_data = read_csv(
-  "./hw2_data/fivethirtyeight_datasets/pols-month.csv"
-  )
+pols_month_data = read_csv ("./hw2_data/fivethirtyeight_datasets/pols-month.csv") %>%
+  janitor::clean_names() %>%
+  separate(col = mon, into = c("year","month","day")) %>%
+  mutate(month=as.numeric(month)) %>%
+  transform(month=month.name[month]) %>%
+  mutate(president = recode(prez_gop, `1` = "gop", `0` = "dem")) %>%
+  select (-prez_gop, -prez_dem, -day)
 
 unemployment_data = read_csv(
   "./hw2_data/fivethirtyeight_datasets/unemployment.csv"
-  )
+  ) %>%
+  janitor::clean_names()
 
 snp_data = read_csv(
   "./hw2_data/fivethirtyeight_datasets/snp.csv"
