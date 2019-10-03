@@ -82,6 +82,15 @@ unemployment_data = read_csv(
     jan:dec,
     names_to = "month",
     values_to = "unemployment_rate"
-    )
+    ) %>%
+  transform(month=month.name[month])
+
+snp_pol_data = 
+  left_join(pols_month_data, snp_data, by = c("year","month"))
+
 ```
+## Will use part of this, need to change to numeric dates in unemployment, but have to save for class.
+
+fivethirtyeight_data = 
+  left_join(snp_pol_data, unemployment_data, by = "year")
 
