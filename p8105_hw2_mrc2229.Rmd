@@ -129,3 +129,14 @@ olivia_data = pop_baby_names_data %>%
   )
 ```
 `r knitr::kable(olivia_data)`
+
+##Scatterplot showing how number of children with a name affects rank in popularity of that name for white non-hispanic male children born in 2016
+```{r}
+male_name_scatterplot = pop_baby_names_data %>% 
+  filter(gender=="male") %>%
+  filter(ethnicity=="white non hispanic") %>%
+  filter(year_of_birth=="2016") %>%
+  ggplot(aes(x = rank, y = count)) + 
+  geom_point(color="blue")
+male_name_scatterplot
+```
