@@ -91,7 +91,11 @@ snp_pol_data =
 
 
 fivethirtyeight_data = 
-  left_join(snp_pol_data, unemployment_data, by = c("year", "month"))
+  left_join(snp_pol_data, unemployment_data, by = c("year", "month")) %>%
+  mutate(year=as.numeric(year))
 ```
 
+In the pols_month_data data set we can see the amount of represation each party has in the house and senate, as well as each party's control over governorships and the presidency. The snp_data shows the closing values of the S&P stock market on the associated date. Lastly, unemployment_data shows the percentage of people unemployed for each month of every year. 
+
+These data sets were merged into one data set called fivethirtyeight_data that contains all of the above information. This combined data is the size of the dataset is `r nrow(fivethirtyeight_data)` rows by `r ncol(fivethirtyeight_data)` columns and contains years from 1947 to 2015.
 
