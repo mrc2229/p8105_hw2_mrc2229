@@ -77,6 +77,11 @@ snp_data = read_csv(
 unemployment_data = read_csv(
   "./hw2_data/fivethirtyeight_datasets/unemployment.csv"
   ) %>%
-  janitor::clean_names()
+  janitor::clean_names() %>%
+  pivot_longer(
+    jan:dec,
+    names_to = "month",
+    values_to = "unemployment_rate"
+    )
 ```
 
