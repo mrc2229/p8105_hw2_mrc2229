@@ -33,7 +33,7 @@ precip_2017_data = read_excel(
   mutate(year=2017)
 
 precip_2018_data = read_excel(
-  "./hw2_data/Trash-Wheel-Collection-Totals-8-6-19.xlsx", 
+  "./hw2_data/Trash-Wheel-Collection-Totals-8-6-19.xlsx" , 
   sheet = 5,
   skip = 1,
   range = "A2:B14") %>%
