@@ -60,7 +60,7 @@ pols_month_data = read_csv ("./hw2_data/fivethirtyeight_datasets/pols-month.csv"
   janitor::clean_names() %>%
   separate(col = mon, into = c("year","month","day")) %>%
   mutate(month=as.numeric(month)) %>%
-  transform(month=month.name[month]) %>%
+  transform(month=month.abb[month]) %>%
   mutate(president = recode(prez_gop, `1` = "gop", `0` = "dem")) %>%
   select (-prez_gop, -prez_dem, -day)
 
@@ -71,26 +71,27 @@ snp_data = read_csv(
   separate(col = date, into = c("month","day", "year")) %>%
   mutate(month=as.numeric(month)) %>%
   arrange (year, month) %>%
-  transform(month=month.name[month]) %>%
+  transform(month=month.abb[month]) %>%
   select (year, month, day, close)
 
 unemployment_data = read_csv(
   "./hw2_data/fivethirtyeight_datasets/unemployment.csv"
   ) %>%
-  janitor::clean_names() %>%
   pivot_longer(
-    jan:dec,
+    Jan:Dec,
     names_to = "month",
     values_to = "unemployment_rate"
     ) %>%
-  transform(month=month.name[month])
+  janitor::clean_names()%>%
+  mutate(year=as.character(year))
+
 
 snp_pol_data = 
   left_join(pols_month_data, snp_data, by = c("year","month"))
 
-```
-## Will use part of this, need to change to numeric dates in unemployment, but have to save for class.
 
 fivethirtyeight_data = 
-  left_join(snp_pol_data, unemployment_data, by = "year")
+  left_join(snp_pol_data, unemployment_data, by = c("year", "month"))
+```
+
 
