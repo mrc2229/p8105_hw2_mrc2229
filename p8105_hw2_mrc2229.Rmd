@@ -48,13 +48,14 @@ precip_data =
   janitor::clean_names() %>%
   transform(month=month.name[month])
 ```
+##Describe the Mr. Trash Wheel Data Sets
 
 There are `r nrow (trashwheel_data)` observations in the trashwheel data set and `r ncol (trashwheel_data)` variables. Some of the key variables include weight_tons, which is the amount of trash collected that month in tons, and volume_cubic_yards, which gives the volume of the trash. We also can see things like the about of sports balls Mr. Trash wheel collected in a month or over a period of time. For example, Mr. Trashwheel collected a median of `r trashwheel_data %>% filter (year=="2017") %>% pull(sports_balls) %>% median()` sports balls in 2017.
 
 There are `r nrow (precip_data)` observations in the trashwheel data set and `r ncol (precip_data)` variables. This data set contains the amount of precipitation in inches for every month of 2017 and 2018. So we can use it to show things like the total precipitation in 2018, which is `r precip_data %>% filter (year=="2018") %>% pull(precip_inches) %>% sum()` inches.
 
 #Problem 2
-##Reading and cleaning the FiveThirtyEight data.
+##Reading, cleaning, and merging the FiveThirtyEight data.
 ```{r}
 pols_month_data = read_csv ("./hw2_data/fivethirtyeight_datasets/pols-month.csv") %>%
   janitor::clean_names() %>%
@@ -95,7 +96,36 @@ fivethirtyeight_data =
   mutate(year=as.numeric(year))
 ```
 
+##Describe the FiveThirtyEight Data Sets
+
 In the pols_month_data data set we can see the amount of represation each party has in the house and senate, as well as each party's control over governorships and the presidency. The snp_data shows the closing values of the S&P stock market on the associated date. Lastly, unemployment_data shows the percentage of people unemployed for each month of every year. 
 
 These data sets were merged into one data set called fivethirtyeight_data that contains all of the above information. This combined data is the size of the dataset is `r nrow(fivethirtyeight_data)` rows by `r ncol(fivethirtyeight_data)` columns and contains years from 1947 to 2015.
 
+#Problem 3
+##Read and clean the popular baby names data.
+```{r}
+pop_baby_names_data = read_csv ("./hw2_data/Popular_Baby_Names.csv") %>%
+  janitor::clean_names() %>%
+  mutate(childs_first_name = tolower(childs_first_name)) %>%
+  mutate(ethnicity = tolower(ethnicity)) %>%
+  mutate(gender = tolower(gender)) %>%
+  mutate(
+    ethnicity = if_else (ethnicity=="black non hisp", "black non hispanic", ethnicity),
+    ethnicity = if_else (ethnicity=="white non hisp", "white non hispanic", ethnicity),
+    ethnicity = if_else (ethnicity=="asian and paci", "asian and pacific islander", ethnicity)
+  ) %>%
+  distinct()
+```
+##Popularity of the name Olivia
+```{r}
+olivia_data = pop_baby_names_data %>%
+  filter (childs_first_name=="olivia") %>%
+  select (year_of_birth, ethnicity, rank) %>%
+  arrange (year_of_birth) %>%
+  pivot_wider(
+    names_from = "year_of_birth",
+    values_from = "rank"
+  )
+```
+`r knitr::kable(olivia_data)`
